@@ -1,0 +1,49 @@
+{
+    "short_name": "GIF Lover",
+    "name": "GIF Lover: Best Trending GIF",
+    "description": "GIF Lover is the best trending GIF of GIPHY !",
+    "icons": [
+        {
+            "src": "/assets/images/icon-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/assets/images/icon-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#3367D6",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "theme_color": "#f44336",
+    "shortcuts": [
+        {
+            "name": "Search GIF Lover",
+            "short_name": "Search",
+            "description": "Search some GIF on GIF Lover",
+            "url": "/search",
+            "icons": [
+                {
+                    "src": "/assets/images/icon-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Save GIF Lover",
+            "short_name": "Saved",
+            "description": "Save your favorite GIF on GIF Lover",
+            "url": "/saved",
+            "icons": [
+                {
+                    "src": "/assets/images/icon-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}

@@ -8,6 +8,7 @@
         content="Search for your favorite GIFs on GIPHY and save them offline by clicking on the heart!">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- TODO: 7c - Declare a theme color in meta (use #f44336 or your favorite color) -->
+    <meta name="theme-color" content="#f44336">
     <!-- Icons -->
     <link rel="icon" type="image/png" href="/assets/images/icon-192x192.png">
     <link name="msapplication-TileImage" type="image/png" href="/assets/images/icon-144x144.png">
@@ -95,6 +96,7 @@
         media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
         href="/assets/images/splash-1536x2048.png" />
     <!-- TODO: 8d - Use Manifest here by using a <link> -->
+    <link rel="manifest" href="/manifest.webmanifest">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/assets/css/normalize.css">
     <link rel="stylesheet" href="/assets/css/fonts.css">
@@ -178,17 +180,25 @@
     <script src="/assets/js/dexie.min.js"></script>
     <script>
         // TODO: 4e - Declare a new local database using Dexie named 'ILoveGifs' (case-sensitive)
-        window.db = null; // Replace null here by new database objedt
+        window.db = new Dexie("ILoveGifs"); // Replace null here by new database objedt
 
         // TODO: 4f - Declare a table named 'gifs' that stores the following columns: 'id', 'title', 'imageUrl', 'videoUrl'
+        window.db.version(1).stores({
+            gifs: "++id, title, imageUrl, videoUrl"
+        });
     </script>
     <script src="/assets/js/search.js"></script>
     <script>
-        // TODO: 3g - Check if navigator supports Service Workers
-        if (true) { // Replace `true` by the proper condition
-            // TODO: 3h - Register your service worker (located in /sw.js)
-        } else {
-            // TODO: 3i - If not, display a message in console
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js')
+              .then(reg => {
+                console.log('Service worker registered! 😎', reg);
+              })
+              .catch(err => {
+                console.log('😥 Service worker registration failed: ', err);
+              });
+          });
         }
     </script>
 </body>

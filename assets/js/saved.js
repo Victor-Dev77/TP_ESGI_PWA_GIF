@@ -4,15 +4,22 @@ function removeGIFFromFavorite(event) {
 
     const gifElement = document.getElementById(gifId);
     const gifVideoUrl = gifElement.querySelector('source').src;
-    const gifImageUrl = gifElement.querySelector('img').src;
-
-    const db = window.db;
+    const gifImageUrl = gifElement.querySelector('video img').dataset.src;
 
     // TODO: 6a - Open IndexedDB's database
+    const db = window.db;
 
     // TODO: 6b - Remove GIF from local database using its ID
+    db.gifs.delete(gifId);
 
     // TODO: 6c - Remove GIF media (image and video) from cache
+    caches
+        .open("gif-images")
+        .then(cache => {
+            cache.delete(gifImageUrl);
+            cache.delete(gifVideoUrl);
+        })
+        .catch(e => console.log(e));
 
     // Remove GIF element
     const articlesContainerElement = document.getElementById("gifs");
@@ -40,7 +47,7 @@ function buildGIFCard(gifItem) {
 
     const imageSourceElement = document.createElement('img');
     imageSourceElement.classList.add('lazyload');
-    imageSourceElement.dataset.src = gifItem.images.original.webp;
+    imageSourceElement.dataset.src = gifItem.imageUrl;
     imageSourceElement.alt = `${gifItem.title} image`;
     gifImageElement.appendChild(imageSourceElement);
 
@@ -73,9 +80,11 @@ function buildGIFCard(gifItem) {
 }
 
 window.addEventListener("DOMContentLoaded", async function () {
+    // TODO: 5a - Open IndexedDB's database
     const db = window.db;
 
-    // TODO: 5a - Open IndexedDB's database
-
     // TODO: 5b - Fetch saved GIFs from local database and display them (use function buildGIFCard)
+    const listGIF = await db.gifs.toArray();
+
+    listGIF.forEach(async gif => buildGIFCard(gif, true));
 });
